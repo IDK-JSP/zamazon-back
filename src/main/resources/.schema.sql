@@ -9,7 +9,9 @@ CREATE TABLE product (
     product_id INT PRIMARY KEY AUTO_INCREMENT,
     product_name VARCHAR(255) NOT NULL,
     poster_path VARCHAR(255),
-    description VARCHAR(255)
+    description VARCHAR(255),
+    price DOUBLE,
+    quantity int
 );
 
 CREATE TABLE orders (
