@@ -17,6 +17,7 @@ CREATE TABLE product (
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255),
+    total DOUBLE,
     FOREIGN KEY (email) REFERENCES user(email)
 );
 CREATE TABLe orders_content(

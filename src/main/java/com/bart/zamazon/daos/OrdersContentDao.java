@@ -13,18 +13,26 @@ import java.util.List;
 @Repository
 public class OrdersContentDao {
     JdbcTemplate jdbcTemplate;
-    public OrdersContentDao(JdbcTemplate jdbcTemplate){
+
+    public OrdersContentDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    private final RowMapper<OrdersContent> ordersContentRowMapper = (rs, _)-> new OrdersContent(
+
+    private final RowMapper<OrdersContent> ordersContentRowMapper = (rs, _) -> new OrdersContent(
             rs.getInt("order_id"),
             rs.getInt("product_id"),
             rs.getInt("quantity")
     );
-    public List<OrdersContent> findAllOrdersContent(){
+
+    public List<OrdersContent> findAllOrdersContent() {
         String sql = "SELECT * FROM orders_content";
-        return jdbcTemplate.query(sql,ordersContentRowMapper);
+        List<OrdersContent> ordersContents = jdbcTemplate.query(sql, ordersContentRowMapper);
+        if (ordersContents.isEmpty()){
+            throw new ResourceNotFoundException("Aucune facture trouvé");
+        }
+        return ordersContents;
     }
+
     public List<OrdersContent> findOrderContentByOrderId(int order_id) {
         String sql = "SELECT * FROM orders_content WHERE order_id = ?";
 
@@ -38,10 +46,11 @@ public class OrdersContentDao {
 
         return orderContents;
     }
+
     public OrdersContent saveOrderContent(OrdersContent ordersContent) {
 
         String sql = "INSERT INTO orders_content (order_id, product_id, quantity) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, ordersContent.getOrder_id(), ordersContent.getProduct_id(),ordersContent.getQuantity());
+        jdbcTemplate.update(sql, ordersContent.getOrder_id(), ordersContent.getProduct_id(), ordersContent.getQuantity());
 
         String sqlGetId = "SELECT LAST_INSERT_ID()";
         int id = jdbcTemplate.queryForObject(sqlGetId, int.class);
