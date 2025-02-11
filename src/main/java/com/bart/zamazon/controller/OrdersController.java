@@ -5,13 +5,16 @@ import com.bart.zamazon.daos.OrdersDao;
 import com.bart.zamazon.entitys.Orders;
 import com.bart.zamazon.entitys.OrdersContent;
 import com.bart.zamazon.entitys.Product;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
 
+@RestController
+@RequestMapping("/orders")
 public class OrdersController {
     private final OrdersDao ordersDao;
 
@@ -33,6 +36,11 @@ public class OrdersController {
         }
 
         return ResponseEntity.ok(orders);
+    }
+    @PostMapping
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orders orders) {
+        Orders createdOrder = ordersDao.saveOrder(orders);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
 }

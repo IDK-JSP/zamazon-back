@@ -26,4 +26,5 @@ public class UserController {
         return  ResponseEntity.ok(Collections.singletonList(userDao.findByEmail(query)));
     }
 
+
 }

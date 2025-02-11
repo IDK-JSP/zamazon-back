@@ -22,9 +22,9 @@ public class ProductController {
     public ResponseEntity<List<Product>> getAllProduct(){
         return ResponseEntity.ok(productDao.findAllProduct());
     }
-    @GetMapping("/search")
-    public ResponseEntity<List<Product>> getProductByName(@RequestParam String query){
-        return  ResponseEntity.ok(Collections.singletonList(productDao.findByName(query)));
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductByName(@PathVariable int id){
+        return  ResponseEntity.ok(productDao.findById(id));
     }
     @PostMapping
     public ResponseEntity<Product> createMovie(@Valid @RequestBody Product product) {
