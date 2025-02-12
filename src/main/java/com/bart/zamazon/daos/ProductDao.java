@@ -44,12 +44,9 @@ public class ProductDao {
                 .orElseThrow(() -> new ResourceNotFoundException("Produit avec l'ID : " + id + " n'existe pas"));
     }
 
-    public Product findByName(String product_name) {
-        String sql = "SELECT * FROM product WHERE product_name = ?";
-        return jdbcTemplate.query(sql, productRowMapper, product_name)
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Produit : " + product_name + " n'existe pas"));
+    public List<Product> findByName(String product_name) {
+        String sql = "SELECT * FROM product WHERE product_name LIKE ?";
+        return jdbcTemplate.query(sql, productRowMapper, "%" + product_name + "%");
     }
 
     public Product saveProduct(Product product) {

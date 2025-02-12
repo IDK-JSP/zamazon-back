@@ -1,6 +1,7 @@
 package com.bart.zamazon.controller;
 
 import com.bart.zamazon.daos.ProductDao;
+import com.bart.zamazon.entitys.Orders;
 import com.bart.zamazon.entitys.Product;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,16 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductByName(@PathVariable int id){
         return  ResponseEntity.ok(productDao.findById(id));
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> getProductsByName(@RequestParam String query) {
+        List<Product> products = productDao.findByName(query);
+
+        if (products.isEmpty()) {
+            return ResponseEntity.notFound().build();  // Retourne un code 404 si aucune commande n'est trouvée
+        }
+
+        return ResponseEntity.ok(products);
     }
     @PostMapping
     public ResponseEntity<Product> createMovie(@Valid @RequestBody Product product) {

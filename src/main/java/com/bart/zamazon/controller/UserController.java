@@ -25,6 +25,10 @@ public class UserController {
     public ResponseEntity<List<User>> getUserByEmail(@RequestParam String query){
         return  ResponseEntity.ok(Collections.singletonList(userDao.findByEmail(query)));
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUser() {
+        return ResponseEntity.ok(userDao.findAll());
+    }
 
 
 }
