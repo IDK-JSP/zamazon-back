@@ -24,9 +24,6 @@ public class OrdersDao {
     public List<Orders> findAllOrders() {
         String sql = "SELECT * FROM orders";
         List<Orders> orders = jdbcTemplate.query(sql, ordersRawMapper);
-        /*if (orders.isEmpty()){
-            throw new ResourceNotFoundException("Aucune facture trouvé");
-        }*/
         return orders;
     }
     public List<Orders> findAllOrdersByEmail(String email){
@@ -37,6 +34,18 @@ public class OrdersDao {
         }
         return orders;
     }
+    public Orders findLastOrdersByEmail(String email){
+        String sql = "SELECT * FROM orders WHERE email = ? ORDER BY order_id DESC LIMIT 1";
+        List<Orders> ordersList = jdbcTemplate.query(sql, ordersRawMapper, email);
+
+        if (ordersList.isEmpty()) {
+            throw new ResourceNotFoundException("Aucune commande trouvée pour l'email " + email);
+        }
+
+        return ordersList.get(0); // Retourner la première commande (la plus récente)
+    }
+
+
     public Orders saveOrder(Orders orders) {
 
         String sql = "INSERT INTO orders (email, total) VALUES (?, ?)";

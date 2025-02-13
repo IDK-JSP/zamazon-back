@@ -1,6 +1,7 @@
 package com.bart.zamazon.daos;
 
 import com.bart.zamazon.entitys.User;
+import com.bart.zamazon.exceptions.ResourceAlreadyExistException;
 import com.bart.zamazon.exceptions.ResourceNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -46,10 +47,11 @@ public class UserDao {
                 .orElseThrow(() -> new ResourceNotFoundException("User avec l'id : " + id + " n'existe pas"));
     }
     public boolean save(User user) {
+        if (emailExists(user.getEmail())){
+            throw new ResourceAlreadyExistException("Email :"+user.getEmail()+" already registerd");
+        }
         String sql = "INSERT INTO user (email, password, role) VALUES (?, ?, ?)";
         int rowsAffected = jdbcTemplate.update(sql, user.getEmail(), user.getPassword(), user.getRole());
-
-
         return rowsAffected >0;
     }
     public User update(int id, User user) {

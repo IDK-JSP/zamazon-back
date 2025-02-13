@@ -39,8 +39,8 @@ public class OrdersController {
     }
     @PostMapping
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orders orders) {
-        Orders createdOrder = ordersDao.saveOrder(orders);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+        ordersDao.saveOrder(orders);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ordersDao.findLastOrdersByEmail(orders.getEmail()));
     }
 
 }

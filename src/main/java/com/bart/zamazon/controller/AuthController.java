@@ -34,17 +34,10 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
-        try {
-            User userFound = userDao.findByEmail(user.getEmail());
-            return ResponseEntity.badRequest().body("Error: Email is already in use!");
-        } catch (UsernameNotFoundException e) {
-            // Si l'utilisateur n'existe pas déjà, on procède à l'enregistrement
-            System.out.println("test");
+        User newUser = getUser(user);
+        userDao.save(newUser);
+        return ResponseEntity.ok("User registered successfully!");
 
-            User newUser = getUser(user);
-            boolean isUserSaved = userDao.save(newUser);
-            return isUserSaved ? ResponseEntity.ok("User registered successfully!") : ResponseEntity.badRequest().body("Error: User registration failed!");
-        }
     }
 
     private User getUser(User user) {
