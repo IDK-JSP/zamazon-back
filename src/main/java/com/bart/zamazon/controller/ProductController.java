@@ -1,7 +1,6 @@
 package com.bart.zamazon.controller;
 
 import com.bart.zamazon.daos.ProductDao;
-import com.bart.zamazon.entitys.Orders;
 import com.bart.zamazon.entitys.Product;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

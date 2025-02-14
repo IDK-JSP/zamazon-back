@@ -1,7 +1,6 @@
 package com.bart.zamazon.daos;
 
 import com.bart.zamazon.entitys.Orders;
-import com.bart.zamazon.entitys.OrdersContent;
 import com.bart.zamazon.exceptions.ResourceNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

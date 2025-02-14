@@ -2,7 +2,6 @@ package com.bart.zamazon.daos;
 
 import com.bart.zamazon.entitys.Product;
 import com.bart.zamazon.exceptions.ResourceNotFoundException;
-import org.springframework.core.PriorityOrdered;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;

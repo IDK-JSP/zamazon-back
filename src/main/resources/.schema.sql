@@ -23,10 +23,10 @@ CREATE TABLE orders (
 CREATE TABLe orders_content(
     order_id int,
     product_id int,
-    quantity,
+    quantity int,
     primary key(order_id,product_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id) ,
     FOREIGN KEY (product_id) REFERENCES product(product_id)
-)
+);
 
 
